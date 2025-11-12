@@ -16,7 +16,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate.format_sql: true
       hibernate.jdbc.time_zone: UTC
@@ -29,6 +29,11 @@ management:
   endpoint:
     health:
       show-details: never
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-change}
+    ttlSeconds: ${JWT_TTL_SECONDS:43200}
 
 # Object storage (MinIO) placeholders for later milestones
 storage:

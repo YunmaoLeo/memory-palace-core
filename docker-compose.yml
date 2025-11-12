@@ -51,6 +51,8 @@ services:
       DB_NAME: memory_palace
       DB_USERNAME: mp_user
       DB_PASSWORD: mp_pass
+      JWT_SECRET: change-me-in-prod
+      JWT_TTL_SECONDS: 43200
       MINIO_ENDPOINT: http://minio:9000
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin123

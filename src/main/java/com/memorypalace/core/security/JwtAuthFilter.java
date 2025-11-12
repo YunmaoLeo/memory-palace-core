@@ -41,12 +41,21 @@ public class JwtAuthFilter implements Filter {
         try {
             String auth = req.getHeader("Authorization");
             if (auth != null && auth.startsWith("Bearer ")) {
-                String token = auth.substring("Bearer ".length());
-                DecodedJWT jwt = jwtService.verify(token);
-                UUID userId = jwtService.getUserId(jwt);
-                UUID tenantId = jwtService.getTenantId(jwt);
-                String email = jwtService.getEmail(jwt);
-                TenantContext.set(new TenantContext.Principal(userId, tenantId, email));
+                try {
+                    String token = auth.substring("Bearer ".length());
+                    DecodedJWT jwt = jwtService.verify(token);
+                    UUID userId = jwtService.getUserId(jwt);
+                    UUID tenantId = jwtService.getTenantId(jwt);
+                    String email = jwtService.getEmail(jwt);
+                    TenantContext.set(new TenantContext.Principal(userId, tenantId, email));
+                } catch (Exception verifyEx) {
+                    if (!isPublic) {
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        resp.setContentType("application/json");
+                        resp.getWriter().write("{\"error\":\"Invalid token\"}");
+                        return;
+                    }
+                }
             } else if (!isPublic) {
                 resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 resp.setContentType("application/json");
@@ -54,14 +63,6 @@ public class JwtAuthFilter implements Filter {
                 return;
             }
 
-            chain.doFilter(request, response);
-        } catch (Exception ex) {
-            if (!isPublic) {
-                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                resp.setContentType("application/json");
-                resp.getWriter().write("{\"error\":\"Invalid token\"}");
-                return;
-            }
             chain.doFilter(request, response);
         } finally {
             TenantContext.clear();

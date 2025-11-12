@@ -1,0 +1,40 @@
+# Java / Maven
+target/
+*.class
+*.log
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/
+!/.mvn/wrapper/maven-wrapper.properties
+
+# Spring Boot
+*.pid
+
+# IDEs
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.tar
+.docker/
+
+# Logs
+logs/
+*.out
+
+# Coverage / Reports
+coverage/
+site/
+
+
+ProjectOverview.md
+

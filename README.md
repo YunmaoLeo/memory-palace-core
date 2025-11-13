@@ -1,5 +1,8 @@
 ## Memory Palace Core
 
+<img src="usecase/file_upload.png" width="500">
+<img src="usecase/search_bar.png" width="500">
+
 Memory Palace Core is a backend service for building a multi‑source document semantic indexing platform. It ingests documents, persists metadata, stores binaries in object storage, and prepares the foundation for parsing, chunking, and semantic search.
 
 ### Current scope

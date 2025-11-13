@@ -30,6 +30,10 @@ management:
     health:
       show-details: never
 
+# Enrichment settings (no keys here; provider selection only)
+enrich:
+  provider: mock   # options: mock, openai; default wired to mock
+  model: gpt-4o-mini
 security:
   jwt:
     secret: ${JWT_SECRET:dev-secret-change}

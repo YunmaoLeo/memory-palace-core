@@ -1,4 +1,4 @@
-package com.memorypalace.core.repository;
+package com.memorypalace.core.repository.file;
 
 import com.memorypalace.core.model.StoredFile;
 import java.util.Optional;

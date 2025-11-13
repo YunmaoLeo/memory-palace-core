@@ -1,4 +1,4 @@
-package com.memorypalace.core.repository;
+package com.memorypalace.core.repository.user;
 
 import com.memorypalace.core.model.AppUser;
 import java.util.Optional;

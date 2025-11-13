@@ -2,7 +2,7 @@ package com.memorypalace.core.service;
 
 import com.memorypalace.core.model.AppUser;
 import com.memorypalace.core.model.StoredFile;
-import com.memorypalace.core.repository.StoredFileRepository;
+import com.memorypalace.core.repository.file.StoredFileRepository;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;

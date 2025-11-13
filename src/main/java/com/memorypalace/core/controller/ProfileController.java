@@ -2,7 +2,7 @@ package com.memorypalace.core.controller;
 
 import com.memorypalace.core.dto.UserResponse;
 import com.memorypalace.core.model.AppUser;
-import com.memorypalace.core.repository.UserRepository;
+import com.memorypalace.core.repository.user.UserRepository;
 import com.memorypalace.core.security.TenantContext;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;

@@ -2,7 +2,7 @@ package com.memorypalace.core.controller;
 
 import com.memorypalace.core.dto.FileUploadResponse;
 import com.memorypalace.core.model.StoredFile;
-import com.memorypalace.core.repository.UserRepository;
+import com.memorypalace.core.repository.user.UserRepository;
 import com.memorypalace.core.security.TenantContext;
 import com.memorypalace.core.service.FileStorageService;
 import java.util.UUID;

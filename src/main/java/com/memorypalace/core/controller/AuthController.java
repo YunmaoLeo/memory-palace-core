@@ -4,7 +4,7 @@ import com.memorypalace.core.dto.AuthResponse;
 import com.memorypalace.core.dto.LoginRequest;
 import com.memorypalace.core.dto.RegisterRequest;
 import com.memorypalace.core.model.AppUser;
-import com.memorypalace.core.repository.UserRepository;
+import com.memorypalace.core.repository.user.UserRepository;
 import com.memorypalace.core.security.TenantContext;
 import com.memorypalace.core.service.AuthService;
 import jakarta.validation.Valid;

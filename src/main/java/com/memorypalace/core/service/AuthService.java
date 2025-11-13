@@ -2,8 +2,8 @@ package com.memorypalace.core.service;
 
 import com.memorypalace.core.model.AppUser;
 import com.memorypalace.core.model.Tenant;
-import com.memorypalace.core.repository.TenantRepository;
-import com.memorypalace.core.repository.UserRepository;
+import com.memorypalace.core.repository.user.TenantRepository;
+import com.memorypalace.core.repository.user.UserRepository;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;

@@ -51,6 +51,10 @@ services:
       DB_NAME: memory_palace
       DB_USERNAME: mp_user
       DB_PASSWORD: mp_pass
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      OPENAI_CHAT_MODEL: ${OPENAI_CHAT_MODEL:-gpt-4o-mini}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
       JWT_SECRET: change-me-in-prod
       JWT_TTL_SECONDS: 43200
       MINIO_ENDPOINT: http://minio:9000

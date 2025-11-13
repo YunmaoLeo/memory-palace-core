@@ -34,6 +34,13 @@ management:
 enrich:
   provider: mock   # options: mock, openai; default wired to mock
   model: gpt-4o-mini
+
+openai:
+  apiKey: ${OPENAI_API_KEY:}
+  baseUrl: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+  models:
+    chat: ${OPENAI_CHAT_MODEL:gpt-4o-mini}
+    embedding: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
 security:
   jwt:
     secret: ${JWT_SECRET:dev-secret-change}

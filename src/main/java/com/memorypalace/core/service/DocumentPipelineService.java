@@ -10,6 +10,7 @@ import com.memorypalace.core.repository.document.DocumentRepository;
 import com.memorypalace.core.repository.document.DocumentVersionRepository;
 import com.memorypalace.core.service.enrich.EnrichmentRequest;
 import com.memorypalace.core.service.enrich.EnrichmentResponse;
+import com.memorypalace.core.config.OpenAIClient;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
@@ -25,17 +26,23 @@ public class DocumentPipelineService {
     private final DocumentChunkRepository chunkRepository;
     private final TextExtractionService textExtractionService;
     private final EnrichmentService enrichmentService;
+    private final OpenAIEmbeddingService embeddingService;
+    private final OpenAIClient openAIClient;
 
     public DocumentPipelineService(DocumentRepository documentRepository,
                                    DocumentVersionRepository versionRepository,
                                    DocumentChunkRepository chunkRepository,
                                    TextExtractionService textExtractionService,
-                                   EnrichmentService enrichmentService) {
+                                   EnrichmentService enrichmentService,
+                                   OpenAIEmbeddingService embeddingService,
+                                   OpenAIClient openAIClient) {
         this.documentRepository = documentRepository;
         this.versionRepository = versionRepository;
         this.chunkRepository = chunkRepository;
         this.textExtractionService = textExtractionService;
         this.enrichmentService = enrichmentService;
+        this.embeddingService = embeddingService;
+        this.openAIClient = openAIClient;
     }
 
     @Transactional
@@ -81,6 +88,11 @@ public class DocumentPipelineService {
                 c.setAutoSectionTitle(er.getAutoSectionTitle());
                 c.setCategory(er.getCategory());
                 chunkRepository.save(c);
+            }
+
+            // Optional: auto-embed chunks if OpenAI key is configured
+            if (openAIClient.isConfigured()) {
+                embeddingService.embedVersion(version.getId());
             }
 
             version.setStatus(DocumentStatus.READY);

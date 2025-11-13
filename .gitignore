@@ -35,6 +35,8 @@ logs/
 coverage/
 site/
 
+# Local environment overrides (do not commit secrets)
+dev.env
 
 ProjectOverview.md
 

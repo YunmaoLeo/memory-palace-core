@@ -100,6 +100,16 @@ public class FileStorageService {
         return new UploadResult(stored, false);
     }
 
+    public UploadResult uploadToFolder(AppUser owner, MultipartFile file, String title, com.memorypalace.core.model.Folder folder) throws IOException {
+        UploadResult res = upload(owner, file, title);
+        StoredFile sf = res.storedFile;
+        if (folder != null) {
+            sf.setFolder(folder);
+            storedFileRepository.save(sf);
+        }
+        return new UploadResult(sf, res.duplicate);
+    }
+
     private void ensureBucketExists() {
         try {
             s3Client.headBucket(HeadBucketRequest.builder().bucket(bucketName).build());

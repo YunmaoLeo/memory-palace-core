@@ -34,6 +34,10 @@ public class StoredFile {
     @JoinColumn(name = "owner_id", nullable = false)
     private AppUser owner;
 
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
+
     @Column(name = "title", length = 255)
     private String title;
 
@@ -68,6 +72,8 @@ public class StoredFile {
     public void setTenant(Tenant tenant) { this.tenant = tenant; }
     public AppUser getOwner() { return owner; }
     public void setOwner(AppUser owner) { this.owner = owner; }
+    public Folder getFolder() { return folder; }
+    public void setFolder(Folder folder) { this.folder = folder; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     public String getOriginalFilename() { return originalFilename; }

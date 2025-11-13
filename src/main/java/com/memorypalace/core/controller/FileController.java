@@ -4,6 +4,8 @@ import com.memorypalace.core.dto.FileUploadResponse;
 import com.memorypalace.core.model.StoredFile;
 import com.memorypalace.core.repository.user.UserRepository;
 import com.memorypalace.core.security.TenantContext;
+import com.memorypalace.core.model.Folder;
+import com.memorypalace.core.repository.project.FolderRepository;
 import com.memorypalace.core.service.FileStorageService;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +22,18 @@ public class FileController {
 
     private final FileStorageService fileStorageService;
     private final UserRepository userRepository;
+    private final FolderRepository folderRepository;
 
-    public FileController(FileStorageService fileStorageService, UserRepository userRepository) {
+    public FileController(FileStorageService fileStorageService, UserRepository userRepository, FolderRepository folderRepository) {
         this.fileStorageService = fileStorageService;
         this.userRepository = userRepository;
+        this.folderRepository = folderRepository;
     }
 
     @PostMapping("/upload")
     public ResponseEntity<FileUploadResponse> upload(@RequestParam("file") MultipartFile file,
-                                                     @RequestParam(value = "title", required = false) String title)
+                                                     @RequestParam(value = "title", required = false) String title,
+                                                     @RequestParam(value = "folderId", required = false) java.util.UUID folderId)
         throws Exception {
         var principal = TenantContext.get();
         if (principal == null) {
@@ -37,7 +42,17 @@ public class FileController {
         UUID userId = principal.userId;
         var owner = userRepository.findById(userId).orElseThrow();
 
-        var result = fileStorageService.upload(owner, file, title);
+        Folder folder = null;
+        if (folderId != null) {
+            folder = folderRepository.findById(folderId).orElse(null);
+            if (folder == null || !folder.getTenant().getId().equals(principal.tenantId)) {
+                return ResponseEntity.status(403).build();
+            }
+        }
+
+        var result = (folder != null)
+            ? fileStorageService.uploadToFolder(owner, file, title, folder)
+            : fileStorageService.upload(owner, file, title);
         StoredFile f = result.storedFile;
         FileUploadResponse resp = new FileUploadResponse(
             f.getId(), f.getTenant().getId(), f.getOwner().getId(),
